@@ -1,0 +1,260 @@
+﻿<Window x:Class="CUT_RAIL_MACHINE.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CUT_RAIL_MACHINE.Views"
+        xmlns:viewModel="clr-namespace:CUT_RAIL_MACHINE.ViewModels"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:conv="clr-namespace:CUT_RAIL_MACHINE.Services"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="1300"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True">
+    <Window.Resources>
+        <Storyboard x:Key="FadeInStoryboard">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                             From="0" To="1" Duration="0:0:0.5"/>
+        </Storyboard>
+
+        <Storyboard x:Key="FadeOutStoryboard">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                 From="1" To="0"
+                 Duration="0:0:0.5" FillBehavior="Stop"/>
+        </Storyboard>
+        <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
+    </Window.Resources>
+    <Border CornerRadius="0"                    
+            BorderThickness="2">
+
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="{StaticResource winBoderColor1}" Offset="0"/>
+                <GradientStop Color="{StaticResource winBoderColor2}" Offset="0.75"/>
+                <GradientStop Color="{StaticResource winBoderColor3}" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <!--Navigation menu-->
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--Navigation menu-->
+            <Border CornerRadius ="0"
+                    Grid.Column="0">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="{StaticResource secondaryBackColor1}" Offset="0"/>
+                        <GradientStop Color="{StaticResource secondaryBackColor2}" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel>
+                    <!--Logo-->
+                    <StackPanel Orientation="Horizontal"
+                                Height="35"
+                                Margin="15,25,0,40">
+                        <Image Source="/Images/spclogo.png" Height="30"/>
+                        <TextBlock Text="CUT RAIL MACHINE"
+                                   Foreground="{StaticResource titleColor2}"
+                                   FontSize="18"
+                                   FontFamily="Montserrat"
+                                   FontWeight="Medium"
+                                   VerticalAlignment="Center"
+                                   Margin="10,0,0,0"/>
+                        <TextBlock Text="v1.0"
+                                    Foreground="{StaticResource titleColor2}"
+                                    FontSize="10"
+                                    FontFamily="Montserrat"
+                                    FontWeight="Medium"
+                                    VerticalAlignment="Bottom"
+                                    Margin="10,0,0,0"/>
+
+                    </StackPanel>
+                    <!--Menu Buttons-->
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource color11}"
+                                 IsChecked="False"
+                                 x:Name="ShowHomeViewCommand">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Home" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Dashboard" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource color2}"
+                                 x:Name="ShowCustomerViewCommand"
+                                 Visibility="Collapsed">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="History" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="History" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource color7}"
+                                 x:Name="ShowReportCommand"
+                                 Visibility="Collapsed">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="PieChart" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Report" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource color6}"
+                                 x:Name="ShowSettingCommand">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Tools" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Setting" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                </StackPanel>
+            </Border>
+            <!--Main Selection-->
+            <Border CornerRadius ="0"
+                    Grid.Column="1">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                        <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0"/>
+                        <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!--Control Bar-->
+                        <RowDefinition Height="25"/>
+                        <!--Header / Caption-->
+                        <RowDefinition Height="50"/>
+                        <!--Content section / Child views-->
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--Control Bar-->
+                    <StackPanel x:Name="pnControlBar"
+                                Grid.Row="0"
+                                Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                Background="Transparent"
+                                Margin="0,0,5,0"
+                                MouseLeftButtonDown="pnControlBar_MouseLeftButtonDown"
+                                MouseEnter="pnControlBar_MouseEnter">
+                        <Button x:Name="bnClose"
+                                Style="{StaticResource controlButton}"
+                                Tag="{StaticResource color4}">
+                            <fa:IconImage Icon="Xmark" Style="{StaticResource controlButtonIcon}"/>
+                        </Button>
+                        <Button x:Name="bnMaximine"
+                                Style="{StaticResource controlButton}"
+                                Tag="{StaticResource color6}"
+                                Click="bnMaximine_Click">
+                            <fa:IconImage Icon="Square" Style="{StaticResource controlButtonIcon}"/>
+                        </Button>
+                        <Button Click="bnMinimize_Click"
+                                Style="{StaticResource controlButton}"
+                                Tag="{StaticResource color6}">
+                            <fa:IconImage Icon="WindowMinimize" Width="12" Style="{StaticResource controlButtonIcon}"/>
+                        </Button>
+                    </StackPanel>
+
+                    <!--Header / Caption-->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="350"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <!--Caption-->
+                        <StackPanel Grid.Column="0"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <fa:IconImage Icon="{Binding Icon}"
+                                          Height="20"
+                                          Width="20"
+                                          Foreground="Magenta"
+                                          Margin="35,0,10,0"/>
+
+                            <TextBlock Text="{Binding Caption}"
+                                       Foreground="Magenta"
+                                       FontSize="16"
+                                       FontFamily="Montserrat"
+                                       FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                       
+                        <!--User options-->
+                        <StackPanel Grid.Column="2"
+                                    Orientation="Horizontal"
+                                    FlowDirection="RightToLeft"
+                                    VerticalAlignment="Center"
+                                    Margin="0,0,10,0">
+
+                            <Button Style="{StaticResource iconButton}"
+                                    Tag="{StaticResource color1}">
+                                <fa:IconImage Icon="AngleDown" 
+                                              Height="12"
+                                              Width="12"
+                                              Style="{StaticResource iconButtonIcon}"/>
+                                <Button.ContextMenu>
+                                    <ContextMenu Background="Pink">
+                                        <MenuItem Header="Profile" />
+                                        <MenuItem Header="Change Password" />
+                                        <Separator/>
+                                        <MenuItem Header="Log out"/>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                            </Button>
+                            <TextBlock Text="{Binding CurrentUserAccount}"
+                                       Foreground="{StaticResource color1}"
+                                       FontFamily="Montserrat"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"/>
+                            <Ellipse Height="35" Width="35"
+                                     Stroke="{StaticResource color2}"
+                                     StrokeThickness="2"
+                                     FlowDirection="LeftToRight"
+                                     Margin="10,0,10,0">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding CurrentUserAccountIMG}"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <Button Style="{StaticResource iconButton}"
+                                    Tag="{StaticResource color3}">
+                                <fa:IconImage Icon="Clock" Style="{StaticResource iconButtonIcon}"/>
+                            </Button>
+                            <Button Style="{StaticResource iconButton}"
+                                    Tag="{StaticResource color4}">
+                                <fa:IconImage Icon="Envelope" Style="{StaticResource iconButtonIcon}"/>
+                            </Button>
+                            <Button Style="{StaticResource iconButton}"
+                                    Tag="{StaticResource color5}">
+                                <fa:IconImage Icon="Bell" Style="{StaticResource iconButtonIcon}"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                    <!--Content section / Child views-->
+                    <Grid  Grid.Row="2">
+                        <ContentControl x:Name="ActiveItem"
+                                        Margin="25"></ContentControl>
+                    </Grid>
+                    <!--<Border x:Name="OverlayGrid" Background="#80FFFFFF" Grid.Row="2" CornerRadius="15" Margin="25" Visibility="{Binding IsUnlocked, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock x:Name="BlinkingText" Text="🔒 Locked, please enter ID and PO to use." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" Foreground="HotPink" FontWeight="Bold" />
+                            <TextBlock Text="🔒 Locked, Please contact OST - PE for support." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Foreground="HotPink" FontWeight="Bold"  Margin="0,20,0,0"/>
+                        </StackPanel>
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Grid.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                        <DoubleAnimation Storyboard.TargetName="OverlayGrid" Storyboard.TargetProperty="Opacity" From="0.3" To="1" Duration="0:0:1.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                    </Border>-->
+
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
