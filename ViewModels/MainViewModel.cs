@@ -19,7 +19,6 @@ using System.Drawing;
 using System.Data.SqlClient;
 using CUT_RAIL_MACHINE.Helpers;
 using System.IO;
-using CUT_RAIL_MACHINE.Services.Interfaces;
 
 namespace CUT_RAIL_MACHINE.ViewModels
 {
@@ -43,7 +42,10 @@ namespace CUT_RAIL_MACHINE.ViewModels
         public IconChar Icon { get => _icon; set { _icon = value; NotifyOfPropertyChange(() => Icon); } }
 
         public Visibility IsManualCommand { get => _IsManualCommand; set { _IsManualCommand = value; NotifyOfPropertyChange(() => IsManualCommand); } }
-        
+
+        private Visibility _isAccess = Visibility.Collapsed;
+        public Visibility IsAccess { get => _isAccess; set { _isAccess = value; NotifyOfPropertyChange(() => IsAccess); } }
+
         private object _view;
 
         public void AttachView(object view, object context = null)
@@ -57,12 +59,13 @@ namespace CUT_RAIL_MACHINE.ViewModels
         }
 
         private UserRepository userRepository;
-        private IPLCComm S7Comm;
+        private PLCComm S7Comm;
         private HomeViewModel homeViewModel;
         private SettingViewModel settingViewModel;
         private readonly IEventAggregator _eventAggregator;
         private readonly IWindowManager _windowManager;
         private SerialPortPLC plcCom;
+        private ModbusTCP modbusTCP;
         private Thread _plcThread;
         private Thread _sqlThread;
         private bool _isRunning = false;
@@ -75,18 +78,12 @@ namespace CUT_RAIL_MACHINE.ViewModels
         public MainViewModel()
         {
             LoadDataConfig();
-
+            modbusTCP = new ModbusTCP();
             userRepository = new UserRepository();
-            S7Comm = new PLCComm();
-            S7Comm.ConnectPLC();
-
-            homeViewModel = new HomeViewModel(S7Comm);
-            settingViewModel = new SettingViewModel();
-            ShowHomeViewCommand();
+            homeViewModel = new HomeViewModel(this, modbusTCP);
             
-            //LoadCurrentUserData();
-            //StartPlcThread();
-            //SQLConn();
+            settingViewModel = new SettingViewModel(homeViewModel, ref modbusTCP);
+            ShowHomeViewCommand();
         }
 
         public void ShowHomeViewCommand()
@@ -94,6 +91,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
             ActivateItemAsync(homeViewModel);
             Caption = "Dashboard";
             Icon = IconChar.Home;
+            settingViewModel.IsUpdate = false;
         }
         public void ShowSettingCommand()
         {
@@ -120,6 +118,11 @@ namespace CUT_RAIL_MACHINE.ViewModels
             // Path File
             basePathConfig = Path.Combine(AppContext.BaseDirectory, "config.ini");
 
+            // Data Modbus
+            List<string> listModbus = IniFile.ReadSectionRawValue(basePathConfig, "ModbusTCPIP");
+            DataConfigModel.Modbus_IP = listModbus[0];
+            DataConfigModel.Modbus_Port = listModbus[1];
+
             // Data PLC Siemen
             List<string> listPLC = IniFile.ReadSectionRawValue(basePathConfig, "PLCSiemen");
             DataConfigModel.CPUTypes = listPLC[0];
@@ -128,7 +131,12 @@ namespace CUT_RAIL_MACHINE.ViewModels
             DataConfigModel._Slot = listPLC[3];
 
             // Data PLC FX Serial
-
+            List<string> listPLCFx = IniFile.ReadSectionRawValue(basePathConfig, "PLCFXSerial");
+            DataConfigModel._Port = listPLCFx[0];
+            DataConfigModel._BaudRate = listPLCFx[1];
+            DataConfigModel._Parity = listPLCFx[2];
+            DataConfigModel._DataBits = listPLCFx[3];
+            DataConfigModel._StopBits = listPLCFx[4];
 
             // Data Employees
             List<string> listEmp = IniFile.ReadSectionRawValue(basePathConfig, "Employees");
@@ -142,21 +150,19 @@ namespace CUT_RAIL_MACHINE.ViewModels
             DataConfigModel.PersistSecurityInfo = listSQL[2];
             DataConfigModel.UserID = listSQL[3];
             DataConfigModel.Password = listSQL[4];
+            DataConfigModel.SaveSQL = listSQL[5];
+            //string[] _isSave = DataConfigModel.SaveSQL.Split('=');
+            //bool _boolSQL = Convert.ToBoolean(_isSave[1]);
 
             // Data Save Excel
-
+            List<string> listSaveData = IniFile.ReadSectionRawValue(basePathConfig, "SaveDataExcel");
+            DataConfigModel.PathSaveData = listSaveData[0];
+            DataConfigModel.FileSaveData = listSaveData[1];
+            DataConfigModel.SaveExcel = listSaveData[2];
         }
         private string _access = "";
-        private void LoadCurrentUserData()
-        {
-            //CurrentUserAccount = UserSession.CurrentUser;
-            //_access = UserSession.CurrentAccess;
-            //if(_access.Equals("PE"))
-            //{
-            //    IsManualCommand = Visibility.Visible;
-            //}
-        }
-        /*
+        
+        
         private void StartPlcThread()
         {
             _plcThread = new Thread(() =>
@@ -165,12 +171,12 @@ namespace CUT_RAIL_MACHINE.ViewModels
 
                 while (!_isRunning)
                 {
-                    bool currentStatus = plcCom.CheckConnectPLC();
+                    bool currentStatus = S7Comm.IsConnect();
 
                     if (!currentStatus)
                     {
                         _eventAggregator.PublishOnUIThreadAsync(new PlcDataMessage { IsConnectPLC = 0 });
-                        plcCom.ConnectPLC();
+                        S7Comm.ConnectPLC();
                         if (UserSession.NumberOfLoginTimes == 1)
                         {
                             if (plcCom.CheckConnectPLC())
@@ -205,7 +211,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
             _plcThread.IsBackground = true;
             _plcThread.Start();
         }
-        */
+        /*
         private void SQLConn()
         {
             _sqlThread = new Thread(() =>
@@ -235,7 +241,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
             _sqlThread.IsBackground = true;
             _sqlThread.Start();
         }
-        /*
+        
         public Task HandleAsync(AutoDoneEvent message, CancellationToken cancellationToken)
         {
             if (message.Message == 1)

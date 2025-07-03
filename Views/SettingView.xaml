@@ -5,8 +5,236 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CUT_RAIL_MACHINE.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-       
-    </Grid>
+             d:DesignHeight="600" d:DesignWidth="900">
+    <Border Grid.Column="1" Background="#200F53">
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="{StaticResource winBoderColor1}" Offset="0"/>
+                <GradientStop Color="{StaticResource winBoderColor2}" Offset="0.5"/>
+                <GradientStop Color="{StaticResource winBoderColor3}" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="175"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="175"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="120"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="7" Margin="20,0,20,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Column="0" Grid.Row="0" x:Name="OPEN_DOOR" Content="OPEN DOOR" Style="{StaticResource GradientBorderButton4}" Margin="10,0" Background="{Binding IsOpenDoor}"/>
+                    <Button Grid.Column="0" Grid.Row="2" x:Name="CLOSE_DOOR" Content="CLOSE DOOR" Style="{StaticResource GradientBorderButton4}" Margin="10,0" Background="{Binding IsCloseDoor}"/>
+                    <Button Grid.Column="1" Grid.Row="0" x:Name="HYDRAULIC_PUMP" Content="HYDRAULIC PUMP" Style="{StaticResource GradientBorderButton4}" Margin="10,0" Background="{Binding IsHydraulicPump}"/>
+                    <Button Grid.Column="1" Grid.Row="2" x:Name="MAIN_SHAFT_PUMP" Content="MAIN SHAFT PUMP" Style="{StaticResource GradientBorderButton4}" Margin="10,0" Background="{Binding IsMainShaftPump}"/>
+                    <Button Grid.Column="2" Grid.Row="0" x:Name="COOLANT_WATER" Content="COOLANT WATER" Style="{StaticResource GradientBorderButton4}" Margin="10,0" Background="{Binding IsCoolantWater}"/>
+                    <Button Grid.Column="2" Grid.Row="2" x:Name="MOTOR_CUT" Content="MOTOR CUT" Style="{StaticResource GradientBorderButton4}" Margin="10,0" Background="{Binding IsMotorCut}"/>
+                    <Button Grid.Column="3" Grid.Row="0" x:Name="CLAMP" Content="CLAMP" Style="{StaticResource GradientBorderButton4}" Margin="10,0" Background="{Binding IsClamp}"/>
+                    <Button Grid.Column="3" Grid.Row="2" x:Name="UNCLAMP" Content="UNCLAMP" Style="{StaticResource GradientBorderButton4}" Margin="10,0" Background="{Binding IsUnclamp}"/>
+                    <Button Grid.Column="4" Grid.Row="0" x:Name="JOG_FORWARD" Content="JOG FORWARD" Style="{StaticResource GradientBorderButton4}" Margin="10,0" Background="{Binding IsJogForward}"/>
+                    <Button Grid.Column="4" Grid.Row="2" x:Name="JOG_BACKWARD" Content="JOG BACKWARD" Style="{StaticResource GradientBorderButton4}" Margin="10,0" Background="{Binding IsJogBackward}"/>
+                </Grid>
+            </Border>
+            <Border Grid.Row="5" BorderThickness="0,0,0,2" Margin="20,0,20,0">
+                <Border.BorderBrush>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="{StaticResource winBoderColor1}" Offset="0"/>
+                        <GradientStop Color="{StaticResource winBoderColor2}" Offset="0.5"/>
+                        <GradientStop Color="{StaticResource winBoderColor3}" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+            </Border>
+            <Border Grid.Row="2" BorderThickness="0,0,0,2" Margin="20,0,20,0">
+                <Border.BorderBrush>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="{StaticResource winBoderColor1}" Offset="0"/>
+                        <GradientStop Color="{StaticResource winBoderColor2}" Offset="0.5"/>
+                        <GradientStop Color="{StaticResource winBoderColor3}" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+            </Border>
+            <Border Grid.Row="0" BorderThickness="0,0,0,2" Margin="20,0,20,0">
+                <Border.BorderBrush>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="{StaticResource winBoderColor1}" Offset="0"/>
+                        <GradientStop Color="{StaticResource winBoderColor2}" Offset="0.5"/>
+                        <GradientStop Color="{StaticResource winBoderColor3}" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+                <TextBlock Text="SETTING" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+            </Border>
+            <Border Grid.Row="1" Margin="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Margin="0,0,10,0">
+                        <StackPanel VerticalAlignment="Top" Orientation="Vertical">
+                            <TextBlock Text="POSITON SERVO" Foreground="White" HorizontalAlignment="Center" Padding="0,4,0,0" Margin="0,0,0,10" Height="25"/>
+                            <TextBox Text="{Binding PositionServo, Mode=TwoWay}" IsReadOnly="True" Foreground="Yellow" CaretBrush="LightGray"  BorderBrush="LightGreen"  Style="{StaticResource CustomTextBoxStyle}" Padding="0,0,0,5">
+
+                                <TextBox.Background>
+                                    <ImageBrush Stretch="None" AlignmentX="Left"/>
+                                </TextBox.Background>
+                            </TextBox>
+                            <Button x:Name="HOME" Style="{StaticResource GradientBorderButton4}" Margin="0,20,0,0" Height="50">
+                                <StackPanel>
+                                    <TextBlock Text="HOME" Style="{StaticResource menuButtonText2}"/>
+                                </StackPanel>
+                            </Button>
+
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="2" Margin="10,0,10,0">
+                        <StackPanel VerticalAlignment="Top">
+                            <TextBlock Text="POSITON OFFSET" Foreground="White" HorizontalAlignment="Center" Padding="0,4,0,0" Margin="0,0,0,10" Height="25"/>
+                            <TextBox Text="{Binding PosOffset, Mode=TwoWay}" Padding="0,0,0,5" IsReadOnly="True" Foreground="Yellow" CaretBrush="LightGray"  BorderBrush="LightGreen"  Style="{StaticResource CustomTextBoxStyle}">
+
+                                <TextBox.Background>
+                                    <ImageBrush Stretch="None" AlignmentX="Left"/>
+                                </TextBox.Background>
+                            </TextBox>
+                            <Button x:Name="SetPosOffset" Content="SET POSITION OFFSET" Style="{StaticResource GradientBorderButton4}" Margin="0,20,0,0" Height="50">
+
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="1" Margin="10,0,10,0">
+                        <StackPanel VerticalAlignment="Top">
+                            <TextBlock Text="POSITON ENDCUT" Foreground="White" HorizontalAlignment="Center" Padding="0,4,0,0" Margin="0,0,0,10" Height="25"/>
+                            <TextBox Text="{Binding PosEndCut, Mode=TwoWay}" Padding="0,0,0,5" IsReadOnly="True" Foreground="Yellow" CaretBrush="LightGray"  BorderBrush="LightGreen"  Style="{StaticResource CustomTextBoxStyle}">
+
+                                <TextBox.Background>
+                                    <ImageBrush Stretch="None" AlignmentX="Left"/>
+                                </TextBox.Background>
+                            </TextBox>
+                            <Button x:Name="SetPosEndCut" Content="SET POSITION ENDCUT" Background="Transparent" Foreground="White" Style="{StaticResource GradientBorderButton4}" Margin="0,20,0,0" Height="50">
+
+                            </Button>
+
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="3" Margin="10,0,10,0">
+                        <StackPanel VerticalAlignment="Top">
+                            <TextBlock Text="SET RESOL RULER" Foreground="White" HorizontalAlignment="Center" Padding="0,4,0,0" Margin="0,0,0,10" Height="25"/>
+                            <TextBox Text="{Binding ResolutionRl, Mode=TwoWay}" Padding="0,0,0,5" IsReadOnly="True" Foreground="Yellow" CaretBrush="LightGray"  BorderBrush="LightGreen"  Style="{StaticResource CustomTextBoxStyle}">
+
+                                <TextBox.Background>
+                                    <ImageBrush Stretch="None" AlignmentX="Left"/>
+                                </TextBox.Background>
+                            </TextBox>
+                            <Button x:Name="SET_RESOL_RULER" Content="SET RESOL RULER" Background="Transparent" Foreground="White" Style="{StaticResource GradientBorderButton4}" Margin="0,20,0,0" Height="50">
+
+                            </Button>
+
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="4" Margin="10,0,10,0">
+                        <StackPanel>
+                            <Button x:Name="MANUAL" Content="MANUAL" Background="{Binding IsManual}" Foreground="White" Style="{StaticResource GradientBorderButton4}" Margin="0,20,0,0" Height="100">
+
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border Grid.Row="4" Margin="20,10,10,10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="4">
+                        <Button x:Name="UpdateFromPLC" Style="{StaticResource GradientBorderButton4}">
+                            <StackPanel>
+                                <TextBlock Text="UPDATE" Style="{StaticResource menuButtonText3}"/>
+                            </StackPanel>
+                        </Button>
+                    </Border>
+                    <Border Grid.Column="3" Margin="10,0,10,0">
+                        <StackPanel VerticalAlignment="Top">
+                            <TextBlock Text="SET OFFSET RULER" Foreground="White" HorizontalAlignment="Center" Padding="0,4,0,0" Margin="0,0,0,10" Height="25"/>
+                            <TextBox Text="{Binding SetOffsetRuler, Mode=TwoWay}" Padding="0,0,0,5" Foreground="Yellow" CaretBrush="LightGray"  BorderBrush="Yellow"  Style="{StaticResource CustomTextBoxStyle}">
+
+                                <TextBox.Background>
+                                    <ImageBrush Stretch="None" AlignmentX="Left"/>
+                                </TextBox.Background>
+                            </TextBox>
+                            <Button x:Name="SetOffsetRl" Content="SET OFFSET RULER" Style="{StaticResource GradientBorderButton4}" Margin="0,20,0,0" Height="50">
+
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="2" Margin="10,0,10,0">
+                        <StackPanel VerticalAlignment="Top">
+                            <TextBlock Text="DISTANCE MOTION" Foreground="White" HorizontalAlignment="Center" Padding="0,4,0,0" Margin="0,0,0,10" Height="25"/>
+                            <TextBox Text="{Binding PosTarget, Mode=OneWayToSource}" Foreground="Yellow" CaretBrush="LightGray"  BorderBrush="Yellow"
+                                            Style="{StaticResource CustomTextBoxStyle}" Padding="0,0,0,5">
+
+                            </TextBox>
+                            <UniformGrid Columns="2" HorizontalAlignment="Stretch">
+                                <Button x:Name="JogForwardABS" Content="JOGFORWARD ABS" Style="{StaticResource GradientBorderButton4}" Margin="0,20,10,0" Height="50">
+
+                                </Button>
+                                <Button x:Name="JogBackwardABS" Content="JOGBACKWARD ABS" Style="{StaticResource GradientBorderButton4}" Margin="10,20,0,0" Height="50">
+
+                                </Button>
+                            </UniformGrid>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="0" Margin="0,0,10,0" >
+                        <StackPanel VerticalAlignment="Top">
+                            <TextBlock Text="SPEED CUT" Foreground="White" HorizontalAlignment="Center" Padding="0,4,0,0" Margin="0,0,0,10" Height="25"/>
+                            <TextBox Text="{Binding SpeedCut, Mode=TwoWay}" Padding="0,0,0,5" Foreground="Yellow" CaretBrush="LightGray"  BorderBrush="Yellow"  Style="{StaticResource CustomTextBoxStyle}">
+
+                                <TextBox.Background>
+                                    <ImageBrush Stretch="None" AlignmentX="Left"/>
+                                </TextBox.Background>
+                            </TextBox>
+                            <Button x:Name="SetSpeedCut" Content="SET SPEED CUT" Style="{StaticResource GradientBorderButton4}" Margin="0,20,0,0" Height="50">
+
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="1" Margin="10,0,10,0">
+                        <StackPanel VerticalAlignment="Top">
+                            <TextBlock Text="SPEED JOG" Foreground="White" HorizontalAlignment="Center" Padding="0,4,0,0" Margin="0,0,0,10" Height="25"/>
+                            <TextBox Text="{Binding SpeedJog, Mode=TwoWay}" Padding="0,0,0,5" Foreground="Yellow" CaretBrush="LightGray"  BorderBrush="Yellow"  Style="{StaticResource CustomTextBoxStyle}">
+
+                                <TextBox.Background>
+                                    <ImageBrush Stretch="None" AlignmentX="Left"/>
+                                </TextBox.Background>
+                            </TextBox>
+                            <Button x:Name="SetSpeedJog" Content="SET SPEED JOG" Style="{StaticResource GradientBorderButton4}" Margin="0,20,0,0" Height="50">
+
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
 </UserControl>

@@ -86,6 +86,9 @@
     <Reference Include="Caliburn.Micro.Platform.Core">
       <HintPath>..\..\..\..\Misumi\INSERT_BALL\Output\Caliburn.Micro.Platform.Core.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\INSERT_BALL\Libs\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="ExcelDataReader, Version=3.7.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\ExcelDataReader.dll</HintPath>
@@ -94,7 +97,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\ExcelDataReader.DataSet.dll</HintPath>
     </Reference>
-    <Reference Include="S7.Net">
+    <Reference Include="S7.Net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d5812d469e84c693, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\S7.Net.dll</HintPath>
     </Reference>
     <Reference Include="SerialPortFX, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -137,10 +141,11 @@
     <Compile Include="Services\Bootstrapper.cs" />
     <Compile Include="Helpers\InverseBoolToVisibilityConverter.cs" />
     <Compile Include="Services\IniFile.cs" />
-    <Compile Include="Services\Interfaces\IPLCComm.cs" />
+    <Compile Include="Services\ModbusTCP.cs" />
     <Compile Include="Services\PLCComm.cs" />
     <Compile Include="Services\PulseConverter.cs" />
     <Compile Include="Services\ReadExcelData.cs" />
+    <Compile Include="Services\SaveDataTestExcel.cs" />
     <Compile Include="Services\SerialPortPLC.cs" />
     <Compile Include="CustomControls\ucBindablePasswordBox.xaml.cs">
       <DependentUpon>ucBindablePasswordBox.xaml</DependentUpon>
@@ -209,6 +214,9 @@
     <PackageReference Include="MvvmLightLibs">
       <Version>5.4.1.1</Version>
     </PackageReference>
+    <PackageReference Include="NModbus4">
+      <Version>2.1.0</Version>
+    </PackageReference>
     <PackageReference Include="System.Text.Encoding.CodePages">
       <Version>9.0.4</Version>
     </PackageReference>
@@ -270,7 +278,12 @@
     <Resource Include="Images\PE.png" />
     <Content Include="Library\ExcelDataReader.DataSet.dll" />
     <Content Include="Library\ExcelDataReader.dll" />
+    <Content Include="Library\NModbus4.dll" />
+    <Content Include="Library\S7.Net.dll" />
     <Content Include="Library\SerialPortFX.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

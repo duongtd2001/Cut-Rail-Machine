@@ -9,9 +9,9 @@ namespace CUT_RAIL_MACHINE.Models
     public class DataConfigModel
     {
         // Data config plc siemen
-        public static string CPUTypes {  get; set; }
+        public static string CPUTypes { get; set; }
         public static string IP_PLC { get; set; }
-        public static string _Rack {  get; set; }
+        public static string _Rack { get; set; }
         public static string _Slot { get; set; }
 
         // fx serial
@@ -31,9 +31,15 @@ namespace CUT_RAIL_MACHINE.Models
         public static string PersistSecurityInfo { get; set; }
         public static string UserID { get; set; }
         public static string Password { get; set; }
+        public static string SaveSQL { get; set; }
 
         // Save Data
         public static string PathSaveData { get; set; }
         public static string FileSaveData { get; set; }
+        public static string SaveExcel { get; set; }
+
+        // Data Modbus
+        public static string Modbus_IP { get; set; }
+        public static string Modbus_Port { get; set; }
     }
 }

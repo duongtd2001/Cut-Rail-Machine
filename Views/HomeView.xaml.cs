@@ -25,41 +25,47 @@ namespace CUT_RAIL_MACHINE.Views
         public HomeView()
         {
             InitializeComponent();
-            this.DataContextChanged += HomeView_DataContextChanged;
-        }
-
-        private void HomeView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if(e.NewValue is HomeViewModel vm)
+            //this.DataContextChanged += HomeView_DataContextChanged;
+            this.Loaded += (s, e) =>
             {
-                vm.PropertyChanged += (s, args) =>
+                ResultTextBox.TextChanged += (sender, args) =>
                 {
-                    if (args.PropertyName == nameof(vm.IsUnLocker))
-                    {
-                        Dispatcher.Invoke(() =>
-                        {
-                            if (vm.IsUnLocker)
-                            {
-                                OverlayGrid.Visibility = Visibility.Collapsed;
-                                OverlayGrid.BeginAnimation(UIElement.OpacityProperty, null);
-                            }
-                            else
-                            {
-                                OverlayGrid.Visibility = Visibility.Visible;
-                                var animation = new DoubleAnimation
-                                {
-                                    From = 0.3,
-                                    To = 1,
-                                    Duration = TimeSpan.FromSeconds(1.2),
-                                    AutoReverse = true,
-                                    RepeatBehavior = RepeatBehavior.Forever
-                                };
-                                BlinkingText.BeginAnimation(UIElement.OpacityProperty, animation);
-                            }
-                        });
-                    }
+                    ResultTextBox.ScrollToEnd();
                 };
-            }
+            };
         }
+        //private void HomeView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        //{
+        //    if(e.NewValue is HomeViewModel vm)
+        //    {
+        //        vm.PropertyChanged += (s, args) =>
+        //        {
+        //            if (args.PropertyName == nameof(vm.IsUnLocker))
+        //            {
+        //                Dispatcher.Invoke(() =>
+        //                {
+        //                    if (vm.IsUnLocker)
+        //                    {
+        //                        OverlayGrid.Visibility = Visibility.Collapsed;
+        //                        OverlayGrid.BeginAnimation(UIElement.OpacityProperty, null);
+        //                    }
+        //                    else
+        //                    {
+        //                        OverlayGrid.Visibility = Visibility.Visible;
+        //                        var animation = new DoubleAnimation
+        //                        {
+        //                            From = 0.3,
+        //                            To = 1,
+        //                            Duration = TimeSpan.FromSeconds(1.2),
+        //                            AutoReverse = true,
+        //                            RepeatBehavior = RepeatBehavior.Forever
+        //                        };
+        //                        BlinkingText.BeginAnimation(UIElement.OpacityProperty, animation);
+        //                    }
+        //                });
+        //            }
+        //        };
+        //    }
+        //}
     }
 }

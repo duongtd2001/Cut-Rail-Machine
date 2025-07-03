@@ -53,7 +53,7 @@
         <Setter Property="FontSize" Value="13.5"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
-    
+
     <!--2-->
     <!--Control bar button-->
     <Style x:Key="controlButton" TargetType="Button">
@@ -178,6 +178,14 @@
         <Setter Property="FontSize" Value="13.5"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
+    <Style x:Key="menuButtonText3" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontFamily" Value="Montserrat"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="13.5"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
     <!-- Boder Button and hover-->
     <Style x:Key="GradientBorderButton" TargetType="Button">
         <Setter Property="Foreground" Value="Black"/>
@@ -263,7 +271,8 @@
     </Style>
 
     <Style x:Key="GradientBorderButton4" TargetType="Button">
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Cursor" Value="Arrow"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -344,78 +353,27 @@
 
     <!--Boder Texbox-->
     <Style x:Key="CustomTextBoxStyle" TargetType="TextBox">
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="Background" Value="#200F53"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0,0,0,2"/>
         <Setter Property="FontFamily" Value="Montserrat"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="FontWeight" Value="Medium"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="BorderBrush">
-            <Setter.Value>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="{StaticResource winBoderColor1}" Offset="0"/>
-                    <GradientStop Color="{StaticResource winBoderColor2}" Offset="0.75"/>
-                    <GradientStop Color="{StaticResource winBoderColor3}" Offset="1"/>
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="TextBox">
-                    <Border x:Name="Border"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        Background="{TemplateBinding Background}">
-                        <ScrollViewer Margin="0"
-                                  x:Name="PART_ContentHost"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="CustomTextBoxStyleGreen" TargetType="TextBox">
-        <Setter Property="BorderThickness" Value="5"/>
-        <Setter Property="Background" Value="#200F53"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="FontFamily" Value="Montserrat"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="25"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="BorderBrush">
-            <Setter.Value>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="LightGreen" Offset="0"/>
-                    <GradientStop Color="LightGreen" Offset="1"/>
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="TextBox">
-                    <Border x:Name="Border"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    Background="{TemplateBinding Background}"
-                    CornerRadius="3">
-                        <ScrollViewer Margin="0"
-                              x:Name="PART_ContentHost"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="CaretBrush" Value="LightGray"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Padding" Value="0,4,0,0"/>
+        <Setter Property="Background" Value="Transparent"/>
     </Style>
 
-    <Style x:Key="CustomRichTextBoxStyle" TargetType="RichTextBox">
-        <Setter Property="BorderThickness" Value="2"/>
+    <Style x:Key="CustomTextBoxStyle2" TargetType="TextBox">
+        <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="#200F53"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontFamily" Value="Montserrat"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="BorderBrush">
             <Setter.Value>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -427,18 +385,16 @@
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="RichTextBox">
+                <ControlTemplate TargetType="TextBox">
                     <Border x:Name="Border"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        Background="{TemplateBinding Background}"
-                        CornerRadius="3">
-                        <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    Background="{TemplateBinding Background}">
+                        <ScrollViewer Margin="0"
+                              x:Name="PART_ContentHost"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
-
 </ResourceDictionary>

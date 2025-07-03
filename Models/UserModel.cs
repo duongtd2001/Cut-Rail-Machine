@@ -21,6 +21,8 @@ namespace CUT_RAIL_MACHINE.Models
         public string Date { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
+        public string Lenght { get; set; }  
+        public string _Type { get; set; }
+        public string Quantity { get; set; }
     }
-    
 }

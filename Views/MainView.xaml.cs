@@ -30,6 +30,10 @@ namespace CUT_RAIL_MACHINE.Views
             Storyboard fadeIn = (Storyboard)this.Resources["FadeInStoryboard"];
             fadeIn.Begin(this);
             this.StateChanged += Window_StateChanged;
+            this.Left = SystemParameters.WorkArea.Left;
+            this.Top = SystemParameters.WorkArea.Top;
+            this.Width = SystemParameters.WorkArea.Width;
+            this.Height = SystemParameters.WorkArea.Height;
             //this.WindowState = WindowState.Maximized;
             //this.DataContextChanged += ViewAutoView_DataContextChanged;
         }

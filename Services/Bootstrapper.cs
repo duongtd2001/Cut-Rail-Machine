@@ -10,7 +10,7 @@ namespace CUT_RAIL_MACHINE.Services
 {
     public class Bootstrapper : BootstrapperBase
     {
-        private SimpleContainer _container = new SimpleContainer();
+       private SimpleContainer _container = new SimpleContainer();
         public Bootstrapper() => Initialize();
 
         protected override void Configure()

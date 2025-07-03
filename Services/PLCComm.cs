@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 using S7.Net;
 using S7.Net.Types;
 using CUT_RAIL_MACHINE.Models;
-using CUT_RAIL_MACHINE.Services.Interfaces;
 using System.Windows;
 
 namespace CUT_RAIL_MACHINE.Services
 {
-    public class PLCComm : IPLCComm
+    public class PLCComm
     {
         private Plc S7Comm;
         private CpuType cpuTypes;
@@ -40,22 +39,30 @@ namespace CUT_RAIL_MACHINE.Services
             }
         }
 
-        public bool IsConnected()
+        public bool IsConnect()
         {
             return S7Comm.IsConnected;
         }
 
         public bool ReadBoolFromPLC(string address)
         {
-            return (bool)S7Comm.Read(address);
+            try
+            {
+                bool result = (bool)S7Comm.Read(address);
+                return result;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public double ReadDoubleFromPLC(string address)
+        public double ReadRealFromPLC(string address)
         {
-            return (double)S7Comm.Read(address);
+            return ((uint)S7Comm.Read(address)).ConvertToDouble();
         }
 
-        public void WriteBoolToPLC(string address, bool value)
+        public void WriteBoolToPLC(string address, int value)
         {
             S7Comm.Write(address, value);
         }

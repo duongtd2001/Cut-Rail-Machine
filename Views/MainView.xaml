@@ -8,7 +8,7 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:conv="clr-namespace:CUT_RAIL_MACHINE.Services"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1300"
+        Title="MainWindow" Height="800" Width="1280"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         Background="Transparent"
@@ -76,7 +76,7 @@
                     <!--Menu Buttons-->
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color11}"
-                                 IsChecked="False"
+                                 IsChecked="True"
                                  x:Name="ShowHomeViewCommand">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Home" Style="{StaticResource menuButtonIcon}"/>
@@ -103,7 +103,7 @@
                     </RadioButton>
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color6}"
-                                 x:Name="ShowSettingCommand">
+                                 x:Name="ShowSettingCommand"  Visibility="{Binding IsAccess}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Tools" Style="{StaticResource menuButtonIcon}"/>
                             <TextBlock Text="Setting" Style="{StaticResource menuButtonText}"/>
@@ -204,8 +204,9 @@
                                 </Button.ContextMenu>
                             </Button>
                             <TextBlock Text="{Binding CurrentUserAccount}"
-                                       Foreground="{StaticResource color1}"
+                                       Foreground="White"
                                        FontFamily="Montserrat"
+                                       FontWeight="Medium"
                                        FontSize="12"
                                        VerticalAlignment="Center"/>
                             <Ellipse Height="35" Width="35"
