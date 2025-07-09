@@ -119,20 +119,6 @@ namespace CUT_RAIL_MACHINE.Services
             
         }
 
-        //public void WriteMutilRegsReal(ushort regsAddress, double[] value)
-        //{
-        //    try
-        //    {
-        //        foreach (double d in value)
-        //        {
-
-        //        }
-        //    }
-        //    catch
-        //    {
-        //    }
-        //}
-
         public void WriteSingleRegsReal(ushort regsAddress, double value)
         {
             try

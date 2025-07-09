@@ -1,4 +1,4 @@
-﻿<Application x:Class="project.App"
+﻿<Application x:Class="CUT_RAIL_MACHINE.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:services="clr-namespace:CUT_RAIL_MACHINE.Services">

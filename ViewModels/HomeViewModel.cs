@@ -296,6 +296,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
                         {
                             sw.Reset();
                             sw.Start();
+                            bool _restart = false;
                             modbusTCP.WriteMutilRegisters(2, _ushorts);
                             rulers = modbusTCP.ReadMutilHoldingReal(32, 22);
                             intValue = modbusTCP.ReadMutilHoldingInt(0, 15);
@@ -308,8 +309,12 @@ namespace CUT_RAIL_MACHINE.ViewModels
                             {
                                 if (intValue[13] == 1)
                                 {
-                                    aResults += $"[{DateTime.Now.ToString("yyyy MM dd - HH mm ss")}]     CUTTING FINISH\n";
-                                    aResults += $"[{DateTime.Now.ToString("yyyy MM dd - HH mm ss")}]     RESTART\n";
+                                    if(!_restart)
+                                    {
+                                        aResults += $"[{DateTime.Now.ToString("yyyy MM dd - HH mm ss")}]     CUTTING FINISH\n";
+                                        aResults += $"[{DateTime.Now.ToString("yyyy MM dd - HH mm ss")}]     RESTART\n";
+                                        _restart = !_restart;
+                                    }
                                 }
                             }
                             Thread.Sleep(50);
@@ -348,23 +353,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
         private string endTime;
         public void FinishPO()
         {
-            Thread t = new Thread(() =>
-            {
-                if (!string.IsNullOrEmpty(PO) && PO.Length == 12)
-                {
-                    aResults += $"[{DateTime.Now.ToString("yyyy MM dd - HH mm ss")}]     FINISH PO\n";
-                    modbusTCP.WriteSingleRegis(13, 1);
-                    modbusTCP.WriteSingleRegis(13, 0);
-                    endTime = DateTime.Now.ToString();
-                    saveDataTestExcel.SaveData("CUT RAIL MACHINE", UserSession.CurrentUser, UserSession.CurrentID, UserSession.CurrentAccess, UserSession.CurrentPO,
-                        CuttingLenght, TypeX, Quantity, startTime, endTime);
-                    Username = "";
-                    FullName = "";
-                    PO = "";
-                }
-            });
-            t.IsBackground= true;
-            t.Start();
+            
         }
     }
 }

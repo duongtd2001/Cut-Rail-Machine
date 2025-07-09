@@ -17,11 +17,10 @@ namespace CUT_RAIL_MACHINE.Services
         {
             _container.Instance(_container);
 
-            // Đăng ký services
             _container
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>();
-            // Đăng ký ViewModels
+            
             GetType().Assembly.GetTypes()
                  .Where(type => type.IsClass)
                  .Where(type => type.Name.EndsWith("ViewModel"))
