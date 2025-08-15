@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:CUT_RAIL_MACHINE.Views"
              xmlns:focus="clr-namespace:CUT_RAIL_MACHINE.Helpers"
              xmlns:conv="clr-namespace:CUT_RAIL_MACHINE.Services"
-             mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1280">
+             mc:Ignorable="d">
     <UserControl.Resources>
         <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
     </UserControl.Resources>
@@ -33,14 +32,14 @@
             <Border Grid.Row="1">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="300" MaxWidth="500"/>
+                        <ColumnDefinition Width="300"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Border BorderThickness="1" Margin="20">
+                        <Border Margin="20">
                             <Border.BorderBrush>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                     <GradientStop Color="{StaticResource winBoderColor1}" Offset="0"/>
@@ -48,59 +47,7 @@
                                     <GradientStop Color="{StaticResource winBoderColor3}" Offset="1"/>
                                 </LinearGradientBrush>
                             </Border.BorderBrush>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="100"/>
-                                </Grid.RowDefinitions>
-                                <Border Grid.Row="0" BorderThickness="0,0,0,2" Margin="20,0,20,0">
-                                    <Border.BorderBrush>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                            <GradientStop Color="{StaticResource winBoderColor1}" Offset="0"/>
-                                            <GradientStop Color="{StaticResource winBoderColor2}" Offset="0.5"/>
-                                            <GradientStop Color="{StaticResource winBoderColor3}" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Border.BorderBrush>
-                                    <TextBlock Text="EMPLOYEE AND PO INFORMATION" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-                                </Border>
-                                <Border Grid.Row="1" Margin="0,20,0,20">
-                                    <UniformGrid Rows="9" HorizontalAlignment="Stretch">
-                                        <TextBlock Text="ID" Foreground="Yellow" Margin="20,0,20,0"/>
-                                        <TextBox x:Name="txtUser" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" focus:AutoFocusHelper.IsFocused="{Binding IsIDFocused}"  FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Yellow"
-                                                 CaretBrush="LightGray" BorderBrush="Yellow" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="20,0,20,0" Padding="20,0,0,0">
-                                            <TextBox.Background>
-                                                <ImageBrush  Stretch="None" AlignmentX="Left"/>
-                                            </TextBox.Background>
-                                        </TextBox>
-                                        <!--helpers:AutoFocusHelper.IsFocused="{Binding IsPOFocused}"-->
-                                        <TextBlock/>
-                                        <TextBlock Text="NAME" Foreground="Aqua" Margin="20,0,20,0"/>
-                                        <TextBox Text="{Binding FullName}" Foreground="Aqua" Margin="20,0,20,0" CaretBrush="LightGray" BorderBrush="Aqua" BorderThickness="0,0,0,2" FontSize="15"
-                                                FontWeight="Medium" FontFamily="Montserrat" VerticalContentAlignment="Center" Padding="20,0,0,0" IsReadOnly="True">
-                                            <TextBox.Background>
-                                                <ImageBrush Stretch="None" AlignmentX="Left"/>
-                                            </TextBox.Background>
-                                        </TextBox>
-                                        <TextBlock/>
-                                        <TextBlock Text="PO" Foreground="DeepPink" Margin="20,0,20,0"/>
-                                        <TextBox x:Name="txtPO" Text="{Binding PO, UpdateSourceTrigger=PropertyChanged}" focus:AutoFocusHelper.IsFocused="{Binding IsPOFocused}" Foreground="DeepPink" Margin="20,0,20,0" CaretBrush="LightGray"  BorderBrush="DeepPink"  BorderThickness="0,0,0,2" FontSize="15"
-                                                FontWeight="Medium" FontFamily="Montserrat"  VerticalContentAlignment="Center"  Padding="20,0,0,0" >
-                                            <TextBox.Background>
-                                                <ImageBrush Stretch="None" AlignmentX="Left"/>
-                                            </TextBox.Background>
-                                        </TextBox>
-                                        <TextBlock Text="{Binding ErrorMessage}" Foreground="#D7596D" FontSize="12" FontWeight="Medium" FontFamily="Montserrat" Margin="0,10,0,0" TextWrapping="Wrap"
-                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </UniformGrid>
-                                    
-                                </Border>
-                                <Border Grid.Row="2" Margin="0,20,0,20">
-                                    <Button x:Name="FinishPO" Content="FINISH PO" Style="{StaticResource GradientBorderButton4}" Margin="20,0,20,0">
-                                        
-                                    </Button>
-                                </Border>
-                            </Grid>
+                            <ContentControl x:Name="mEmployeesChildView"></ContentControl>
                         </Border>
                     </Grid>
                     <Border Grid.Column="1" Margin="0,20,20,20" BorderThickness="1">
@@ -118,9 +65,10 @@
                                 <RowDefinition Height="10"/>
                                 <RowDefinition Height="20"/>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="10"/>
                             </Grid.RowDefinitions>
 
-                            <Border Grid.Row="5" BorderThickness="0,0,0,0" Margin="20,0,20,0">
+                            <Border Grid.Row="4" BorderThickness="0,0,0,0" Margin="20,0,20,0">
                                 <Border.BorderBrush>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                         <GradientStop Color="{StaticResource winBoderColor1}" Offset="0"/>
@@ -128,6 +76,18 @@
                                         <GradientStop Color="{StaticResource winBoderColor3}" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Border.BorderBrush>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                                        <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0">
+                                        <ContentControl x:Name="MasterStoneChildView"></ContentControl>
+                                    </Border>
+                                </Grid>
                             </Border>
                             <Border Grid.Row="2" BorderThickness="0,0,0,2" Margin="20,0,20,0">
                                 <Border.BorderBrush>
@@ -173,17 +133,28 @@
                                             </Button>
                                         </StackPanel>
                                     </Border>
-                                    <Border Grid.Column="2" Margin="10,0,10,0">
+                                    <Border Grid.Column="1" Margin="10,0,10,0">
                                         <StackPanel>
                                             <TextBlock Text="CUTTING LENGHT (mm)" Foreground="White" HorizontalAlignment="Center" Padding="0,4,0,0" Margin="0,0,0,10" Height="25"/>
-                                            <TextBox Text="{Binding CuttingLenght, Mode=OneWay}" IsReadOnly="True" Padding="0,0,0,5" Foreground="Yellow" CaretBrush="LightGray"  BorderBrush="LightGreen" Style="{StaticResource CustomTextBoxStyle}">
+                                            <TextBox Text="{Binding employeesChildViewModel.mLenght, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Padding="0,0,0,5" Foreground="Yellow" CaretBrush="LightGray"  BorderBrush="LightGreen" Style="{StaticResource CustomTextBoxStyle}">
                                                 <TextBox.Background>
                                                     <ImageBrush Stretch="None" AlignmentX="Left"/>
                                                 </TextBox.Background>
                                             </TextBox>
                                         </StackPanel>
                                     </Border>
-                                    <Border Grid.Column="1" Margin="10,0,10,0">
+                                    <Border Grid.Column="2" Margin="10,0,10,0">
+                                        <StackPanel VerticalAlignment="Top">
+                                            <TextBlock Text="TYPE" Foreground="White" HorizontalAlignment="Center" Padding="0,4,0,0" Margin="0,0,0,10" Height="25"/>
+                                            <TextBox Text="{Binding employeesChildViewModel.mTypex, UpdateSourceTrigger=PropertyChanged}" Padding="0,0,0,5" IsReadOnly="True" Foreground="Yellow" CaretBrush="LightGray"  BorderBrush="LightGreen"  Style="{StaticResource CustomTextBoxStyle}">
+                                                
+                                                <TextBox.Background>
+                                                    <ImageBrush Stretch="None" AlignmentX="Left"/>
+                                                </TextBox.Background>
+                                            </TextBox>
+                                        </StackPanel>
+                                    </Border>
+                                    <!--<Border Grid.Column="1" Margin="10,0,10,0">
                                         <StackPanel VerticalAlignment="Top">
                                             <TextBlock Text="CHANGE LENGHT (mm)" Foreground="White" HorizontalAlignment="Center" Padding="0,4,0,0" Margin="0,0,0,10" Height="25"/>
                                             <TextBox Text="{Binding ValueChangeLenght, Mode=OneWayToSource}" Padding="0,0,0,5" Foreground="Yellow" CaretBrush="LightGray"  BorderBrush="Yellow" Style="{StaticResource  CustomTextBoxStyle}">
@@ -201,8 +172,8 @@
                                                 </Button>
                                             </UniformGrid>
                                         </StackPanel>
-                                    </Border>
-                                    <Border Grid.Column="3" Margin="10,0,10,0">
+                                    </Border>-->
+                                    <!--<Border Grid.Column="3" Margin="10,0,10,0">
                                         <StackPanel VerticalAlignment="Top">
                                             <TextBlock Text="RESOLUTION (mm)" Foreground="White" HorizontalAlignment="Center" Padding="0,4,0,0" Margin="0,0,0,10" Height="25"/>
                                             <TextBox Text="{Binding ResolutionRuler, Mode=OneWay}" IsReadOnly="True" Padding="0,0,0,5" Foreground="Yellow" CaretBrush="LightGray"  BorderBrush="LightGreen"  Style="{StaticResource CustomTextBoxStyle}">
@@ -216,10 +187,10 @@
 
                                             </Button>
                                         </StackPanel>
-                                    </Border>
+                                    </Border>-->
                                 </Grid>
                             </Border>
-                            <Border Grid.Row="4" Margin="20,10,10,10">
+                            <!--<Border Grid.Row="4" Margin="20,10,10,10">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto" MinWidth="{Binding MinWidthColums}"/>
@@ -258,7 +229,7 @@
                                         </StackPanel>
                                     </Border>
                                 </Grid>
-                            </Border>
+                            </Border>-->
                         </Grid>
                     </Border>
                 </Grid>

@@ -10,6 +10,8 @@ using Modbus.Extensions.Enron;
 using Caliburn.Micro;
 using S7.Net;
 using System.Runtime.InteropServices;
+using System.Net;
+using Modbus.Message;
 
 
 namespace CUT_RAIL_MACHINE.Services
@@ -18,15 +20,23 @@ namespace CUT_RAIL_MACHINE.Services
     {
         TcpClient client;
         ModbusIpMaster master;
-        public ModbusTCP()
+
+        private MachineData machineData;
+
+        public ModbusTCP(MachineData machine)
+        {
+            machineData = machine;
+            Connect();
+        }
+
+        public void Connect()
         {
             try
             {
-                client = new TcpClient();
-                client.Connect(DataConfigModel.Modbus_IP, Convert.ToInt16(DataConfigModel.Modbus_Port));
-                client.SendTimeout = 3000;
-                client.ReceiveTimeout = 3000;
-                master = ModbusIpMaster.CreateIp(client);
+                //client = new TcpClient(machineData.PLC_IP, machineData.PLC_PORT);
+                //client.SendTimeout = 3000;
+                //client.ReceiveTimeout = 3000;
+                //master = ModbusIpMaster.CreateIp(client);
             }
             catch
             {

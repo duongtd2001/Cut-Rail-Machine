@@ -10,13 +10,14 @@ namespace CUT_RAIL_MACHINE.Models
     public interface IUserRepository
     {
         bool AuthenticateUser(NetworkCredential credential);
-        void Add(UserModel userModel);
-        void Edit(UserModel userModel);
+        void Add();
+        void Edit();
         void Remove(string Id);
-        UserModel GetById(int Id);
-        UserModel GetByUsername(string username);
-        IEnumerable<UserModel> GetByAll();
-        bool StatusConnectSQL();
+        string GetProductNameByPO(string Po);
+        void GetByUsername(string username);
+        //IEnumerable<> GetByAll();
+        bool StatusConnectERP();
+        bool StatusConnectOST();
         //...
     }
 }

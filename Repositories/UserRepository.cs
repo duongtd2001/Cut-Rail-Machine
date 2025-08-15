@@ -11,175 +11,88 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
 
 namespace CUT_RAIL_MACHINE.Repositories
 {
     public class UserRepository : RepositoryBase, IUserRepository
     {
-        private ReadExcelData readExcelData;
-        //private UserModel _user;
-        //
-        public void Add(UserModel userModel)
+        public string Error = null;
+        public void Add()
         {
-            try
-            {
-                string query = @"INSERT INTO dbo.ASS_LX (Machine, ID, Name, ProductName, Time) 
-                         VALUES (@machine, @id, @name, @productname, @time)";
-
-                using (SqlConnection conn = GetConnection())
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@machine", userModel.Machine);
-                    cmd.Parameters.AddWithValue("@id", userModel.ID);
-                    cmd.Parameters.AddWithValue("@Name", userModel.Name);
-                    //cmd.Parameters.AddWithValue("@name", userModel.PO);
-                    cmd.Parameters.AddWithValue("@productname", userModel.ProducName);
-                    //cmd.Parameters.AddWithValue("@Time_check", userModel.StartTime);
-                    cmd.Parameters.AddWithValue("@time", userModel.Time);
-
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            catch
-            {
-                //MessageBox.Show("Server not connected!!!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            
+            throw new NotImplementedException();
         }
 
         public bool AuthenticateUser(NetworkCredential credential)
         {
-            readExcelData = new ReadExcelData();
-            //Excel
-            bool validUser = false;
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            throw new NotImplementedException();
+        }
+
+        public void Edit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetProductNameByPO(string Po)
+        {
+            string ProductName = null;
             try
             {
-                using (var stream = File.Open(readExcelData.pathExcel, FileMode.Open, FileAccess.Read))
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                string sqlERP = @"
+                        SELECT h.[PHTX] 
+                        FROM [MANUFA].[MANUFA_61].[DT_REQ_HED] h 
+                        LEFT JOIN [MANUFA].[MANUFA_61].[DT_ORDER_HED] oh 
+                            ON oh.[VBELN] = h.[KDAUF] 
+                        LEFT JOIN [MANUFA].[MANUFA_61].[GRB_PRODUCT] pr 
+                            ON pr.[MATNR] = h.[PHCD]
+                        LEFT JOIN [MANUFA].[MANUFA_61].[DT_ORDER_DTL] ol 
+                            ON ol.[VBELN] = h.[KDAUF]
+                        WHERE h.[AUFNR] = @PONumber";
+
+
+                using (SqlConnection conn = GetConnectionERP())
                 {
-                    var dataSet = reader.AsDataSet(new ExcelDataSetConfiguration()
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sqlERP, conn))
                     {
-                        ConfigureDataTable = (_) => new ExcelDataTableConfiguration() { UseHeaderRow = true }
-                    });
+                        cmd.Parameters.AddWithValue("PONumber", Po);
 
-                    var table = dataSet.Tables[0];
-
-                    foreach (DataRow row in table.Rows)
-                    {
-                        if (row[1].ToString() == credential.UserName)
+                        using (SqlDataReader dr = cmd.ExecuteReader())
                         {
-                            validUser = true;
-                            break;
+                            if (dr.Read())
+                            {
+                                ProductName = dr["PHTX"].ToString();
+                            }
                         }
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Error = $"* ERP Server connection error.";
             }
-            return validUser;
-        }
-        
-        public void Edit(UserModel userModel)
-        {
-            
-            string query = @"UPDATE dbo.ASS_LX 
-                         SET Machine = @machine, Name = @name, LotNo = @lotno, Time = @time 
-                         WHERE ID = @ID";
-            try
-            {
-                using (SqlConnection conn = GetConnection())
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@machine", userModel.Machine);
-                    cmd.Parameters.AddWithValue("@name", userModel.Name);
-                    //cmd.Parameters.AddWithValue("@PO", userModel.ProducName);
-                    cmd.Parameters.AddWithValue("@lotno", userModel.LotNo);
-                    cmd.Parameters.AddWithValue("@time", userModel.Time);
-                    cmd.Parameters.AddWithValue("@id", userModel.ID);
-
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception)
-            {
-            }
+            return ProductName;
         }
 
-        public IEnumerable<UserModel> GetByAll()
+        public void GetByUsername(string username)
         {
-            throw new NotImplementedException();
-        }
-
-        public UserModel GetById(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public UserModel GetByUsername(string username)
-        {
-            //UserModel user = null;
-            ////Excel
-            //readExcelData = new ReadExcelData();
-            //System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-
-            //using (var stream = File.Open(readExcelData.pathExcel, FileMode.Open, FileAccess.Read))
-            //using (var reader = ExcelReaderFactory.CreateReader(stream))
-            //{
-            //    var dataSet = reader.AsDataSet(new ExcelDataSetConfiguration()
-            //    {
-            //        ConfigureDataTable = (_) => new ExcelDataTableConfiguration() { UseHeaderRow = true }
-            //    });
-
-            //    var table = dataSet.Tables[0];
-
-            //    foreach (DataRow row in table.Rows)
-            //    {
-            //        if (row[2].ToString() == username)
-            //        {
-            //            user = new UserModel
-            //            {
-            //                Name = row[2].ToString()
-            //            };
-            //            break;
-            //        }
-            //    }
-            //}
-            //return user;
             throw new NotImplementedException();
         }
 
         public void Remove(string Id)
         {
-            string query = @"DELETE FROM dbo.ASS_LX 
-                         WHERE ID = @id AND Time = (
-                             SELECT MAX(Time) FROM dbo.ASS_LX WHERE ID = @id)";
-            try
-            {
-                using (SqlConnection conn = GetConnection())
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@id", Id);
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            catch { }
-            
+            throw new NotImplementedException();
         }
 
-        public bool StatusConnectSQL()
+        public bool StatusConnectERP()
         {
             bool validConn = false;
-            using (SqlConnection conn = GetConnection())
+            using (SqlConnection conn = GetConnectionERP())
             {
                 try
                 {
                     conn.Open();
-                    if(conn.State == System.Data.ConnectionState.Open)
+                    if (conn.State == System.Data.ConnectionState.Open)
                     {
                         validConn = true;
                     }
@@ -189,7 +102,31 @@ namespace CUT_RAIL_MACHINE.Repositories
                     }
                 }
                 catch
-                { 
+                {
+                }
+            }
+            return validConn;
+        }
+
+        public bool StatusConnectOST()
+        {
+            bool validConn = false;
+            using (SqlConnection conn = GetConnectionOST())
+            {
+                try
+                {
+                    conn.Open();
+                    if (conn.State == System.Data.ConnectionState.Open)
+                    {
+                        validConn = true;
+                    }
+                    else
+                    {
+                        validConn = false;
+                    }
+                }
+                catch
+                {
                 }
             }
             return validConn;

@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Documents;
 using Caliburn.Micro;
 using CUT_RAIL_MACHINE.Services;
+using CUT_RAIL_MACHINE.Models;
 
 namespace CUT_RAIL_MACHINE.ViewModels
 {
@@ -78,11 +79,13 @@ namespace CUT_RAIL_MACHINE.ViewModels
 
         private ModbusTCP modbusTCP;
         HomeViewModel _homeViewModel;
+        private Process_Inspection mProcessInspection;
 
-        public SettingViewModel(HomeViewModel homeViewModel, ref ModbusTCP _modbusTCP)
+        public SettingViewModel(HomeViewModel homeViewModel, ref ModbusTCP _modbusTCP, ref Process_Inspection inspection)
         {
             _homeViewModel = homeViewModel;
             modbusTCP = _modbusTCP;
+            mProcessInspection = inspection;
         }
 
         public void HOME()
@@ -166,12 +169,12 @@ namespace CUT_RAIL_MACHINE.ViewModels
         {
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus() && !string.IsNullOrEmpty(PosTarget))
                     {
-                        modbusTCP.WriteSingleRegsReal(50, _homeViewModel.rulers[9] + Convert.ToDouble(PosTarget));
-                        Thread.Sleep(100);
+                        modbusTCP.WriteSingleRegsReal(50, mProcessInspection.dataDouble[9] + Convert.ToDouble(PosTarget));
+                        Thread.Sleep(20);
                         modbusTCP.WriteSingleRegis(11, 1);
                         modbusTCP.WriteSingleRegis(11, 0);
                         //_homeViewModel.aResults += $"[{DateTime.Now.ToString("yyyy MM dd - HH mm ss")}]     JOG FORWARD + {PosTarget}\n";
@@ -188,11 +191,11 @@ namespace CUT_RAIL_MACHINE.ViewModels
         {
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus() && !string.IsNullOrEmpty(PosTarget))
                     {
-                        modbusTCP.WriteSingleRegsReal(50, _homeViewModel.rulers[9] - Convert.ToDouble(PosTarget));
+                        modbusTCP.WriteSingleRegsReal(50, mProcessInspection.dataDouble[9] - Convert.ToDouble(PosTarget));
                         Thread.Sleep(100);
                         modbusTCP.WriteSingleRegis(11, 1);
                         modbusTCP.WriteSingleRegis(11, 0);
@@ -210,7 +213,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
         {
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus())
                     {
@@ -226,7 +229,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
         {
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus())
                     {
@@ -243,7 +246,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
             _IsHydraulicPump = !_IsHydraulicPump;
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus())
                     {
@@ -270,7 +273,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
             _IsMainShaftPump= !_IsMainShaftPump;
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus())
                     {
@@ -297,7 +300,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
             _IsCoolantWater= !_IsCoolantWater;
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus())
                     {
@@ -324,7 +327,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
             _IsMotorCut= !_IsMotorCut;
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus())
                     {
@@ -350,7 +353,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
         {
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus())
                     {
@@ -367,7 +370,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
         {
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus())
                     {
@@ -385,7 +388,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
             _IsJogForward = !_IsJogForward;
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus())
                     {
@@ -412,7 +415,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
             _IsJogBackward = !_IsJogBackward;
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus())
                     {
@@ -439,7 +442,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
 
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus() && !string.IsNullOrEmpty(ResolutionRl))
                     {
@@ -456,7 +459,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
             _IsManual = !_IsManual;
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus())
                     {
@@ -481,7 +484,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
         {
             Thread t = new Thread(() =>
             {
-                if (_homeViewModel.currentAccess)
+                if (DictinaryInfo.EmployeesInfo["Access"].Equals("PE"))
                 {
                     if (modbusTCP.IsModbus() && !string.IsNullOrEmpty(SetOffsetRuler))
                     {
@@ -502,15 +505,15 @@ namespace CUT_RAIL_MACHINE.ViewModels
                 {
                     if (modbusTCP.IsModbus())
                     {
-                        if (_homeViewModel.rulers != null)
+                        if (mProcessInspection.dataDouble != null)
                         {
-                            ResolutionRl = _homeViewModel.rulers[3].ToString("F2");
-                            PositionServo = _homeViewModel.rulers[4].ToString("F3");
-                            PosEndCut = _homeViewModel.rulers[5].ToString("F3");
-                            PosOffset = _homeViewModel.rulers[6].ToString("F3");
-                            SpeedJog = _homeViewModel.rulers[7].ToString("F2");
-                            SpeedCut = _homeViewModel.rulers[8].ToString("F2");
-                            SetOffsetRuler = _homeViewModel.rulers[10].ToString("F2");
+                            ResolutionRl = mProcessInspection.dataDouble[3].ToString("F2");
+                            PositionServo = mProcessInspection.dataDouble[4].ToString("F3");
+                            PosEndCut = mProcessInspection.dataDouble[11].ToString("F3");
+                            PosOffset = mProcessInspection.dataDouble[6].ToString("F3");
+                            SpeedJog = mProcessInspection.dataDouble[7].ToString("F2");
+                            SpeedCut = mProcessInspection.dataDouble[8].ToString("F2");
+                            SetOffsetRuler = mProcessInspection.dataDouble[10].ToString("F2");
                         }
                     }
                     Thread.Sleep(100);

@@ -44,7 +44,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
                 NotifyOfPropertyChange(() => PO);
                 if (!string.IsNullOrWhiteSpace(_po) && _po.Length == 12)
                 {
-                    UserSession.CurrentPO = PO;
+                    //UserSession.CurrentPO = PO;
                     LoginCommand();
                 }
                 else
@@ -67,24 +67,24 @@ namespace CUT_RAIL_MACHINE.ViewModels
             get => _username;
             set
             {
-                _username = value;
-                NotifyOfPropertyChange(() => Username);
-                UserModel userModel = _readExcelData.FindProductByID(Username);
-                if (userModel != null)
-                {
-                    UserSession.CurrentUser = userModel.Name;
-                    UserSession.CurrentAccess = userModel.Access;
-                    UserSession.CurrentID = userModel.ID;
-                    FullName = userModel.Name;
-                    IsViewVisible = false;
-                    IsAuthenticated = true;
-                    ErrorMessage = "";
-                }
-                else
-                {
-                    FullName = "";
-                    ErrorMessage = "* Invalid username or password";
-                }
+                //_username = value;
+                //NotifyOfPropertyChange(() => Username);
+                //UserModel userModel = _readExcelData.FindProductByID(Username);
+                //if (userModel != null)
+                //{
+                //    UserSession.CurrentUser = userModel.Name;
+                //    UserSession.CurrentAccess = userModel.Access;
+                //    UserSession.CurrentID = userModel.ID;
+                //    FullName = userModel.Name;
+                //    IsViewVisible = false;
+                //    IsAuthenticated = true;
+                //    ErrorMessage = "";
+                //}
+                //else
+                //{
+                //    FullName = "";
+                //    ErrorMessage = "* Invalid username or password";
+                //}
             }
         }
         public SecureString Password 
@@ -128,12 +128,12 @@ namespace CUT_RAIL_MACHINE.ViewModels
         }
 
         private readonly IWindowManager _windowManager;
-        private ReadExcelData _readExcelData;
+        //private ReadExcelData _readExcelData;
 
         public LoginViewModel(IWindowManager windowManager)
         {
             _windowManager = windowManager;
-            _readExcelData = new ReadExcelData();
+            //_readExcelData = new ReadExcelData();
             userRepository = new UserRepository();
         }
         
@@ -141,27 +141,27 @@ namespace CUT_RAIL_MACHINE.ViewModels
         {
             try
             {
-                UserModel userModel = _readExcelData.FindProductByID(Username);
+                //UserModel userModel = _readExcelData.FindProductByID(Username);
                 //int _numberlogin = 0;
-                if (userModel != null)
-                {
-                    UserSession.CurrentUser = userModel.Name;
-                    UserSession.CurrentAccess = userModel.Access;
-                    UserSession.NumberOfLoginTimes++;
-                    if(UserSession.NumberOfLoginTimes > 1)
-                    {
-                        UserSession.NumberOfLoginTimes = 2;
-                    }    
-                    IsViewVisible = false;
-                    IsAuthenticated = true;
-                    var mainVM = IoC.Get<MainViewModel>();
-                    _windowManager.ShowWindowAsync(mainVM);
-                    bnClose();
-                }
-                else
-                {
-                    ErrorMessage = "* Invalid username or password";
-                }
+                //if (userModel != null)
+                //{
+                //    UserSession.CurrentUser = userModel.Name;
+                //    UserSession.CurrentAccess = userModel.Access;
+                //    UserSession.NumberOfLoginTimes++;
+                //    if(UserSession.NumberOfLoginTimes > 1)
+                //    {
+                //        UserSession.NumberOfLoginTimes = 2;
+                //    }    
+                //    IsViewVisible = false;
+                //    IsAuthenticated = true;
+                //    var mainVM = IoC.Get<MainViewModel>();
+                //    _windowManager.ShowWindowAsync(mainVM);
+                //    bnClose();
+                //}
+                //else
+                //{
+                //    ErrorMessage = "* Invalid username or password";
+                //}
             }
             catch { }
         }

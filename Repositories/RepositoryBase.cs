@@ -12,16 +12,23 @@ namespace CUT_RAIL_MACHINE.Repositories
 {
     public abstract class RepositoryBase
     {
-        private readonly string connectionString;
+        private readonly string connectionStringOST;
+        private readonly string connectionStringERP;
         public RepositoryBase()
         {
             //User ID = ost_pe; Password = ost_pe@spclt
-            connectionString = $"{DataConfigModel.DataSource};{DataConfigModel.InitialCatalog};{DataConfigModel.PersistSecurityInfo};" +
-                $"{DataConfigModel.UserID};{DataConfigModel.Password};";
+            connectionStringOST = MachineData.connecttionString[0];
+            connectionStringERP = MachineData.connecttionString[1];
         }
-        protected SqlConnection GetConnection()
+
+        protected SqlConnection GetConnectionOST()
         {
-            return new SqlConnection(connectionString);
-        } 
+            return new SqlConnection(connectionStringOST);
+        }
+
+        protected SqlConnection GetConnectionERP()
+        {
+            return new SqlConnection(connectionStringERP);
+        }
     }
 }

@@ -103,7 +103,7 @@
                     </RadioButton>
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color6}"
-                                 x:Name="ShowSettingCommand"  Visibility="{Binding IsAccess}">
+                                 x:Name="ShowSettingCommand">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Tools" Style="{StaticResource menuButtonIcon}"/>
                             <TextBlock Text="Setting" Style="{StaticResource menuButtonText}"/>
