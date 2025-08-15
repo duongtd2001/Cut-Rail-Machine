@@ -14,7 +14,7 @@
                 <GradientStop Color="{StaticResource winBoderColor3}" Offset="1"/>
             </LinearGradientBrush>
         </Border.BorderBrush>
-        <oxy:PlotView Model="{Binding MyModel}"/>
+        <oxy:PlotView Model="{Binding MyModel}" Background="Transparent"/>
     </Border>
     
 </UserControl>
