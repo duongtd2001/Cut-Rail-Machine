@@ -150,8 +150,6 @@ namespace CUT_RAIL_MACHINE.ViewModels
 
             });
 
-            //MaximumVal = ;
-
             MyModel.Axes.Add(new LinearAxis
             {
                 Position = AxisPosition.Bottom,
