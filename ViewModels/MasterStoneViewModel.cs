@@ -103,9 +103,12 @@ namespace CUT_RAIL_MACHINE.ViewModels
                 Thread.Sleep(20);
                 try
                 {
-                    UpdatePlot();
-                    UpdateDataStone();
-                    WriteDataPLC();
+                    if(modbusTCP.IsModbus())
+                    {
+                        UpdatePlot();
+                        UpdateDataStone();
+                        WriteDataPLC();
+                    }    
                 }
                 catch (Exception)
                 {
