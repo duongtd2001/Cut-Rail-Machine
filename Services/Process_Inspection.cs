@@ -79,7 +79,7 @@ namespace CUT_RAIL_MACHINE.Services
             while(mThreadFlag)
             {
                 GC.Collect();
-                Thread.Sleep(20);
+                Thread.Sleep(50);
                 try
                 {
 
@@ -97,8 +97,8 @@ namespace CUT_RAIL_MACHINE.Services
                             break;
                         case ProcessStatus.READ_DATA:
                             // read data from plc to ui
-                            dataInt = PLCComm.ReadMutilHoldingInt(0, 31);
-                            dataDouble = PLCComm.ReadMutilHoldingReal(32, 62);
+                            dataInt = PLCComm.ReadMutilHoldingInt(0, 61);
+                            dataDouble = PLCComm.ReadMutilHoldingReal(62, 32);
                             break;
                         case ProcessStatus.CUTTING_DONE:
                             // cutting done

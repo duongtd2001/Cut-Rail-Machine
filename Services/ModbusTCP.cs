@@ -26,17 +26,17 @@ namespace CUT_RAIL_MACHINE.Services
         public ModbusTCP(MachineData machine)
         {
             machineData = machine;
-            Connect();
+            //Connect();
         }
 
         public void Connect()
         {
             try
             {
-                //client = new TcpClient(machineData.PLC_IP, machineData.PLC_PORT);
-                //client.SendTimeout = 3000;
-                //client.ReceiveTimeout = 3000;
-                //master = ModbusIpMaster.CreateIp(client);
+                client = new TcpClient(machineData.PLC_IP, machineData.PLC_PORT);
+                client.SendTimeout = 3000;
+                client.ReceiveTimeout = 3000;
+                master = ModbusIpMaster.CreateIp(client);
             }
             catch
             {

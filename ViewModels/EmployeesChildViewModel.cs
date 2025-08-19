@@ -180,6 +180,18 @@ namespace CUT_RAIL_MACHINE.ViewModels
         private string _lenght;
         public string mLenght { get => _lenght; set { _lenght = value; NotifyOfPropertyChange(() => mLenght); } }
 
+        public enum TypeProduct
+        {
+            NONE,
+            LX15,
+            LX20,
+            LX26,
+            LX30,
+            LX45
+        }
+
+        private TypeProduct mProduct = TypeProduct.NONE;
+
         private string _mTypex;
         public string mTypex
         { 
@@ -194,30 +206,35 @@ namespace CUT_RAIL_MACHINE.ViewModels
                     {
                         if (mTypex.Contains("R15"))
                         {
+                            mProduct = TypeProduct.LX15;
                             modbusTCP.WriteSingleRegis(27, 1);
                             Thread.Sleep(20);
                             modbusTCP.WriteSingleRegis(27, 0);
                         }
                         if (mTypex.Contains("R20"))
                         {
+                            mProduct = TypeProduct.LX20;
                             modbusTCP.WriteSingleRegis(28, 1);
                             Thread.Sleep(20);
                             modbusTCP.WriteSingleRegis(28, 0);
                         }
                         if (mTypex.Contains("R26"))
                         {
+                            mProduct = TypeProduct.LX26;
                             modbusTCP.WriteSingleRegis(29, 1);
                             Thread.Sleep(20);
                             modbusTCP.WriteSingleRegis(29, 0);
                         }
                         if (mTypex.Contains("R30"))
                         {
+                            mProduct = TypeProduct.LX30;
                             modbusTCP.WriteSingleRegis(30, 1);
                             Thread.Sleep(20);
                             modbusTCP.WriteSingleRegis(30, 0);
                         }
                         if (mTypex.Contains("R45"))
                         {
+                            mProduct = TypeProduct.LX45;
                             modbusTCP.WriteSingleRegis(31, 1);
                             Thread.Sleep(20);
                             modbusTCP.WriteSingleRegis(31, 0);

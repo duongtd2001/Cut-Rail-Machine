@@ -60,20 +60,22 @@ namespace CUT_RAIL_MACHINE.ViewModels
 
         private Process_Inspection mProcess_Inspection;
         private MasterStoneViewModel mMasterStoneViewModel;
+        private MasterStone masterStone;
 
         private UserRepository mUserRepository;
 
-        public HomeViewModel(ModbusTCP _modbusTCP, ref ExcelRW excel, ref Process_Inspection process_Inspection, UserRepository repository)
+        public HomeViewModel(ModbusTCP _modbusTCP, ref ExcelRW excel, ref Process_Inspection process_Inspection, UserRepository repository, ref MasterStone master)
         {
 
             modbusTCP = _modbusTCP;
             excelRW = excel;
             mUserRepository = repository;
+            masterStone = master;
 
             mProcess_Inspection = process_Inspection;
 
             employeesChildViewModel = new EmployeesChildViewModel(modbusTCP, ref excelRW, mUserRepository);
-            mMasterStoneViewModel = new MasterStoneViewModel();
+            mMasterStoneViewModel = new MasterStoneViewModel(ref masterStone, mProcess_Inspection, ref modbusTCP, ref _employeesChildViewModel);
 
             mEmployeesChildView = employeesChildViewModel;
             MasterStoneChildView = mMasterStoneViewModel;

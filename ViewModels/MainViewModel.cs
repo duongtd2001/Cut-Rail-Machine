@@ -66,6 +66,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
         private MachineData mMachineData;
         private MasterPosition mMasterPosition;
         private Process_Inspection mProcess_Inspection;
+        private MasterStone mMasterStone;
 
         private ExcelRW excelRW;
         private UserRepository userRepository;
@@ -80,6 +81,9 @@ namespace CUT_RAIL_MACHINE.ViewModels
             mMasterPosition = new MasterPosition();
             mMasterPosition.ReadData();
 
+            mMasterStone = new MasterStone();
+            mMasterStone.ReadData();
+
             excelRW = new ExcelRW(mMachineData);
             userRepository = new UserRepository();
 
@@ -87,7 +91,7 @@ namespace CUT_RAIL_MACHINE.ViewModels
 
             mProcess_Inspection = new Process_Inspection(modbusTCP);
 
-            homeViewModel = new HomeViewModel(modbusTCP, ref excelRW, ref mProcess_Inspection, userRepository);
+            homeViewModel = new HomeViewModel(modbusTCP, ref excelRW, ref mProcess_Inspection, userRepository, ref mMasterStone);
             
             settingViewModel = new SettingViewModel(homeViewModel, ref modbusTCP, ref mProcess_Inspection);
             ShowHomeViewCommand();

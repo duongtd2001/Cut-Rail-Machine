@@ -141,6 +141,7 @@
     <Compile Include="Services\FileRW.cs" />
     <Compile Include="Services\MachineData.cs" />
     <Compile Include="Services\MasterPosition.cs" />
+    <Compile Include="Services\MasterStone.cs" />
     <Compile Include="Services\ModbusTCP.cs" />
     <Compile Include="Services\Process_Inspection.cs" />
     <Compile Include="Services\PulseConverter.cs" />
